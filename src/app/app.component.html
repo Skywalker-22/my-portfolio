@@ -1,9 +1,12 @@
 <mat-sidenav-container class="sidenav-container">
-    <mat-sidenav #sidenav class="sidenav" mode="push">
-        <!-- Add your sidenav content here -->
-        <p>Side Nav Content</p>
+    <mat-sidenav #sidenav mode="push">
+        <span class="nav-option">
+            <a class="nav-link" (click)="navigate('/home')">Home</a>
+        </span>
+        <span class="nav-option">
+            <a class="nav-link" (click)="navigate('/about')">About</a>
+        </span>
     </mat-sidenav>
-
     <mat-sidenav-content>
         <main class="main" [class.dark-theme]="isDarkTheme">
             <mat-toolbar class="flex-container">
@@ -12,11 +15,12 @@
                 </button>
                 <span class="toolbar-title">{{ title }}</span>
                 <button mat-icon-button class="toolbar-icon" (click)="toggleTheme()">
-                    <mat-icon>{{ isDarkTheme ? 'light_mode' : 'dark_mode' }}</mat-icon>
+                    <mat-icon>
+                        {{ isDarkTheme ? 'light_mode' : 'dark_mode' }}
+                    </mat-icon>
                 </button>
             </mat-toolbar>
+            <router-outlet />
         </main>
-
-        <router-outlet />
     </mat-sidenav-content>
 </mat-sidenav-container>

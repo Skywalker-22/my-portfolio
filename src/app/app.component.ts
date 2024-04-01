@@ -1,6 +1,6 @@
-import { Component, HostBinding } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { MatSidenavModule } from '@angular/material/sidenav';
+import { Component, HostBinding, ViewChild } from '@angular/core';
+import { Router, RouterOutlet } from '@angular/router';
+import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -19,12 +19,14 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+
+  @HostBinding('class') className = '';
+  @ViewChild('sidenav') sidenav!: MatSidenav;
+
   title = 'My Portfolio';
   isDarkTheme: boolean = false;
 
-  @HostBinding('class') className = '';
-
-  constructor() {
+  constructor(private router: Router) {
     if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
       this.isDarkTheme = localStorage.getItem('theme') === 'dark' ? true : false;
       this.className = this.isDarkTheme ? 'dark-theme' : 'light-theme';
@@ -40,5 +42,11 @@ export class AppComponent {
     if (typeof localStorage !== 'undefined') {
       localStorage.setItem('theme', this.isDarkTheme ? 'dark' : 'light');
     }
+  }
+
+  navigate(path: string) {
+    this.router.navigate([path]).then(() => {
+      this.sidenav.toggle();
+    });
   }
 }
